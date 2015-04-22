@@ -16,24 +16,25 @@ endif()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 if(NOT WIN32)
     set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -O2 -fPIC -std=c99   -Wall -Wextra")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -fPIC -std=c++11 -Wall -Wextra -Wno-unused-parameter")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -fPIC -std=c++0x -Wall -Wextra -Wno-unused-parameter")
 endif()
 
-if(CMAKE_COMPILER_IS_GNUCC)
-    execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
-        OUTPUT_VARIABLE GCC_VERSION)
-    if (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL
-            4.7)
-        message(STATUS "Found GCC Version >= 4.7")
-        set(COMPILER_USABILITY TRUE)
-    else()
-        message(WARNING "GCC Version '${GCC_VERSION}' Is Too Old For rtosc/port-sugar.h"
-            "Examples and port sugar test cannot be built on this system")
-        set(COMPILER_USABILITY FALSE)
-    endif()
-else()
-    set(COMPILER_USABILITY TRUE)
-endif()
+set(COMPILER_USABILITY TRUE)
+#if(CMAKE_COMPILER_IS_GNUCC)
+#    execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+#        OUTPUT_VARIABLE GCC_VERSION)
+#    if (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL
+#            4.7)
+#        message(STATUS "Found GCC Version >= 4.7")
+#        set(COMPILER_USABILITY TRUE)
+#    else()
+#        message(WARNING "GCC Version '${GCC_VERSION}' Is Too Old For rtosc/port-sugar.h"
+#            "Examples and port sugar test cannot be built on this system")
+#        set(COMPILER_USABILITY FALSE)
+#    endif()
+#else()
+#    set(COMPILER_USABILITY TRUE)
+#endif()
 
 add_library(rtosc STATIC src/rtosc.c src/dispatch.c)
 add_library(rtosc-cpp STATIC src/cpp/ports.cpp src/cpp/miditable.cpp
