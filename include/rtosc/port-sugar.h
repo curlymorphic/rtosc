@@ -25,6 +25,15 @@
 #ifndef RTOSC_PORT_SUGAR
 #define RTOSC_PORT_SUGAR
 
+
+template<typename T>
+struct decltype_t
+{
+    typedef T type;
+};
+
+#define decltype(expr) decltype_t<decltype(expr)>::type
+
 //General macro utilities
 #define STRINGIFY2(a) #a
 #define STRINGIFY(a) STRINGIFY2(a)
